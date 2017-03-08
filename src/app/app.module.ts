@@ -5,11 +5,13 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
+import { AppbarComponent } from './appbar/appbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    AppbarComponent
   ],
   imports: [
     BrowserModule,
