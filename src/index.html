@@ -7,23 +7,335 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <p STYLE="background-color: aqua"> PALKKI  </p>
-      </div>
-    </div>>
-    <div class="row">
-      <div class="col-xs-12">
-        <app-root>Loading...</app-root>
-      </div>
-    </div>>
-  </div>>
+<div id="map"></div>
+<script>
+
+  function initMap() {
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 60.16724, lng: 24.94509},
+      zoom: 18
+    });
+    var infoWindow = new google.maps.InfoWindow({map: map});
+
+    //käyttäjän sijainnin pyytäminen
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('<h1>Olet tässä</h1><p style="font-size: x-large">Karttaan on merkitty julkisia ja muita vessoja, klikkaamalla lisätietoja</p>');
+        map.setCenter(pos);
+      }, function () {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Sijaintia ei löytynyt!' :
+        'Selaimesi ei tue paikannusta!');
+    }
+
+
+    //vessat, sijanti, marker, nimi, kuvaus
+    var yliopistonKirjasto = {lat: 60.17137, lng: 24.94869};
+    var vessa0 = new google.maps.Marker({position: yliopistonKirjasto, map: map});
+    var info0 = new google.maps.InfoWindow({
+      content: '<h1>Yliopiston Kirjasto</h1><p>Ilmainen, monta vessaa ympäri kirjastoa</p>'
+    });
+    vessa0.addListener('click', function() {
+      info0.open(map, vessa0);
+    });
+
+    var kluuviK1 = {lat: 60.16942, lng: 24.94806};
+    var vessa001 = new google.maps.Marker({position: kluuviK1, map: map});
+    var info001 = new google.maps.InfoWindow({
+      content: '<h1>Kluuvin K1</h1><p>Ilmainen. Samassa kerroksessa alepan ja subwayn kanssa.</p>'
+    });
+    vessa001.addListener('click', function() {
+      info001.open(map, vessa001);
+    });
+
+
+    var porthaniaAula = {lat: 60.17017, lng: 24.9485};
+    var vessa002 = new google.maps.Marker({position: porthaniaAula, map: map});
+    var info002 = new google.maps.InfoWindow({
+      content: '<h1>Porthanian aula</h1><p>Ilmainen</p>'
+    });
+    vessa002.addListener('click', function() {
+      info002.open(map, vessa002);
+    });
+
+
+    var kansalliskirjasto = {lat: 60.17036, lng: 24.95284};
+    var vessa003 = new google.maps.Marker({position: kansalliskirjasto, map: map});
+    var info003 = new google.maps.InfoWindow({
+      content: '<h1>Kansallisirjasto</h1><p>Ilmainen</p>'
+    });
+    vessa003.addListener('click', function() {
+      info003.open(map, vessa003);
+    });
+
+    var fenniakortteli = {lat: 60.17161, lng: 24.94698};
+    var vessa004 = new google.maps.Marker({position: fenniakortteli, map: map});
+    var info004 = new google.maps.InfoWindow({
+      content: '<h1>Fenniakorttelii</h1><p>Maksullinen</p>'
+    });
+    vessa004.addListener('click', function() {
+      info004.open(map, vessa004);
+    });
+
+    var kinopalatsi = {lat: 60.17143, lng: 24.94634};
+    var vessa005 = new google.maps.Marker({position: kinopalatsi, map: map});
+    var info005 = new google.maps.InfoWindow({
+      content: '<h1>Kinopalatsi</h1><p>Maksullinen</p>'
+    });
+    vessa005.addListener('click', function() {
+      info005.open(map, vessa005);
+    });
+
+    var sokosHelsinki = {lat: 60.17032, lng: 24.93868};
+    var vessa006 = new google.maps.Marker({position: sokosHelsinki, map: map});
+    var info006 = new google.maps.InfoWindow({
+      content: '<h1>Sokos Helsinki</h1><p>Neljännessä kerroksessa, miesten muoti. Ilmainen.</p>'
+    });
+    vessa006.addListener('click', function() {
+      info006.open(map, vessa006);
+    });
+
+    var forumYlaekerta = {lat: 60.16867, lng: 24.9385};
+    var vessa007 = new google.maps.Marker({position: forumYlaekerta, map: map});
+    var info007 = new google.maps.InfoWindow({
+      content: '<h1>Forumin Yläkerta</h1><p>Ilmainen.</p>'
+    });
+    vessa007.addListener('click', function() {
+      info007.open(map, vessa007);
+    });
+
+    var forumKeskikerros = {lat: 60.16904, lng: 24.93796};
+    var vessa008 = new google.maps.Marker({position: forumKeskikerros, map: map});
+    var info008 = new google.maps.InfoWindow({
+      content: '<h1>Forumin Keskikerros</h1><p>Ilmainen.</p>'
+    });
+    vessa008.addListener('click', function() {
+      info008.open(map, vessa008);
+    });
+
+    var kamppi5kerros = {lat: 60.16933, lng: 24.93429};
+    var vessa009 = new google.maps.Marker({position: kamppi5kerros, map: map});
+    var info009 = new google.maps.InfoWindow({
+      content: '<h1>Kampin Yläkerta</h1><p>Viidennessä kerroksessa. Ilmainen.</p>'
+    });
+    vessa009.addListener('click', function() {
+      info009.open(map, vessa009);
+    });
+
+    var kamppi1kerros = {lat: 60.16867, lng: 24.93211};
+    var vessa010 = new google.maps.Marker({position: kamppi1kerros, map: map});
+    var info010 = new google.maps.InfoWindow({
+      content: '<h1>Kampin Ykköskerros</h1><p>Espressohousen vieressä.</p>'
+    });
+    vessa010.addListener('click', function() {
+      info010.open(map, vessa010);
+    });
+
+    var kamppiRavintolat = {lat: 60.16927, lng: 24.93345};
+    var vessa011 = new google.maps.Marker({position: kamppiRavintolat, map: map});
+    var info011 = new google.maps.InfoWindow({
+      content: '<h1>Kampin Ruokanurkkaus</h1><p>Ilmainen.</p>'
+    });
+    vessa011.addListener('click', function() {
+      info011.open(map, vessa011);
+    });
+
+    var musiikkitalo = {lat: 60.17351, lng: 24.93474};
+    var vessa012 = new google.maps.Marker({position: musiikkitalo, map: map});
+    var info012 = new google.maps.InfoWindow({
+      content: '<h1>Musiikkitalo</h1><p>Ilmainen.</p>'
+    });
+    vessa012.addListener('click', function() {
+      info012.open(map, vessa012);
+    });
+
+    var postitalo = {lat: 60.17253, lng: 24.93763};
+    var vessa013 = new google.maps.Marker({position: postitalo, map: map});
+    var info013 = new google.maps.InfoWindow({
+      content: '<h1>Postitalo</h1><p>Kahvilan vieressä. Ilmainen.</p>'
+    });
+    vessa013.addListener('click', function() {
+      info013.open(map, vessa013);
+    });
+
+    var stockmannHelsinki = {lat: 60.16837, lng: 24.94197};
+    var vessa014 = new google.maps.Marker({position: stockmannHelsinki, map: map});
+    var info014 = new google.maps.InfoWindow({
+      content: '<h1>Stockmann Helsinki</h1><p>Useissa kerroksissa. Ilmainen.</p>'
+    });
+    vessa014.addListener('click', function() {
+      info014.open(map, vessa014);
+    });
+
+    var akateeminenKirjakauppa = {lat: 60.16784, lng: 24.94341};
+    var vessa015 = new google.maps.Marker({position: akateeminenKirjakauppa, map: map});
+    var info015 = new google.maps.InfoWindow({
+      content: '<h1>Akateeminen Kirjakauppa</h1><p>Toisessa kerroksessa hissien vieressä. Ilmainen</p>'
+    });
+    vessa015.addListener('click', function() {
+      info015.open(map, vessa015);
+    });
+
+    var esplanadinYleisoeVessa = {lat: 60.16714, lng: 24.94519};
+    var vessa016 = new google.maps.Marker({position: esplanadinYleisoeVessa, map: map});
+    var info016 = new google.maps.InfoWindow({
+      content: '<h1>Esplanadin Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa016.addListener('click', function() {
+      info016.open(map, vessa016);
+    });
+
+    var galleriaEsplanad = {lat: 60.1679, lng: 24.94669};
+    var vessa017 = new google.maps.Marker({position: galleriaEsplanad, map: map});
+    var info017 = new google.maps.InfoWindow({
+      content: '<h1>Galleria Esplanad</h1><p>Ilmainen.</p>'
+    });
+    vessa017.addListener('click', function() {
+      info017.open(map, vessa017);
+    });
+
+    var kaupungintalo = {lat: 60.16806, lng: 24.95284};
+    var vessa018 = new google.maps.Marker({position: kaupungintalo, map: map});
+    var info018 = new google.maps.InfoWindow({
+      content: '<h1>Kaupungintalo</h1><p>Ilmainen.</p>'
+    });
+    vessa018.addListener('click', function() {
+      info018.open(map, vessa018);
+    });
+
+    var kauppahallinYleisoevessa = {lat: 60.16665, lng: 24.95309};
+    var vessa019 = new google.maps.Marker({position: kauppahallinYleisoevessa, map: map});
+    var info019 = new google.maps.InfoWindow({
+      content: '<h1>Kauppahallin Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa019.addListener('click', function() {
+      info019.open(map, vessa019);
+    });
+
+    var ratakadunYleisoevessa = {lat: 60.16343, lng: 24.94531};
+    var vessa020 = new google.maps.Marker({position: ratakadunYleisoevessa, map: map});
+    var info020 = new google.maps.InfoWindow({
+      content: '<h1>Ratakadun Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa020.addListener('click', function() {
+      info020.open(map, vessa020);
+    });
+
+    var varsapuistikonYleisoevessa = {lat: 60.1735, lng: 24.95005};
+    var vessa021 = new google.maps.Marker({position: varsapuistikonYleisoevessa, map: map});
+    var info021 = new google.maps.InfoWindow({
+      content: '<h1>Varsapuistikon Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa021.addListener('click', function() {
+      info021.open(map, vessa021);
+    });
+
+    var mastokadunYleisoevessa = {lat: 60.16464, lng: 24.96791};
+    var vessa022 = new google.maps.Marker({position: mastokadunYleisoevessa, map: map});
+    var info022 = new google.maps.InfoWindow({
+      content: '<h1>Mastokadun Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa022.addListener('click', function() {
+      info022.open(map, vessa022);
+    });
+
+    var kaisaniementannanYleisoevessa = {lat: 24.96791, lng: 24.94991};
+    var vessa023 = new google.maps.Marker({position: kaisaniementannanYleisoevessa, map: map});
+    var info023 = new google.maps.InfoWindow({
+      content: '<h1>Kaisaniemenrannan Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa023.addListener('click', function() {
+      info023.open(map, vessa023);
+    });
+
+    var lapinlahdenPuistikonYleisoevessa = {lat: 60.16637, lng: 24.93096};
+    var vessa024 = new google.maps.Marker({position: lapinlahdenPuistikonYleisoevessa, map: map});
+    var info024 = new google.maps.InfoWindow({
+      content: '<h1>Lapinlahden Puistikon Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa024.addListener('click', function() {
+      info024.open(map, vessa024);
+    });
+
+    var lastenlahdenPuistonYleisoevessa = {lat: 60.16609, lng: 24.92845};
+    var vessa025 = new google.maps.Marker({position: lastenlahdenPuistonYleisoevessa, map: map});
+    var info025 = new google.maps.InfoWindow({
+      content: '<h1>Lastenlahden Puiston Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa025.addListener('click', function() {
+      info025.open(map, vessa025);
+    });
+
+    var tokoinrannanYleisoevessa = {lat: 60.18075, lng: 24.9445};
+    var vessa026 = new google.maps.Marker({position: tokoinrannanYleisoevessa, map: map});
+    var info026 = new google.maps.InfoWindow({
+      content: '<h1>Tokoinrannan Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa026.addListener('click', function() {
+      info026.open(map, vessa026);
+    });
+
+    var esplanadinToinenYleisoevessa = {lat: 60.16729, lng: 24.94962};
+    var vessa027 = new google.maps.Marker({position: esplanadinToinenYleisoevessa, map: map});
+    var info027 = new google.maps.InfoWindow({
+      content: '<h1>Esplanadin toinen Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa027.addListener('click', function() {
+      info027.open(map, vessa027);
+    });
+
+    var brahenkentanYleisovessa = {lat: 60.18675, lng: 24.95062};
+    var vessa028 = new google.maps.Marker({position: brahenkentanYleisovessa, map: map});
+    var info028 = new google.maps.InfoWindow({
+      content: '<h1>Brahenkentän Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa028.addListener('click', function() {
+      info028.open(map, vessa028);
+    });
+
+    var karhupuistonYleisovessa = {lat: 60.18377, lng: 24.95328};
+    var vessa029 = new google.maps.Marker({position: karhupuistonYleisovessa, map: map});
+    var info029 = new google.maps.InfoWindow({
+      content: '<h1>Karhupuiston Yleisövessa</h1><p>Julkinen yleisövessa.</p>'
+    });
+    vessa029.addListener('click', function() {
+      info029.open(map, vessa029);
+    });
+
+    var kallionKirjasto = {lat: 60.18357, lng: 24.95353};
+    var vessa030 = new google.maps.Marker({position: kallionKirjasto, map: map});
+    var info030 = new google.maps.InfoWindow({
+      content: '<h1>Kallion Kirjasto</h1><p>Ilmainen.</p>'
+    });
+    vessa030.addListener('click', function() {
+      info030.open(map, vessa030);
+    });
+
+
+  }
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWt-2dWLaGoD8471OYypaLHHsY5wivjE8&callback=initMap">
+</script>
 </body>
 </html>
